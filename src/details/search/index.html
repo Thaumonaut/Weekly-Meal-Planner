@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Weekly Meal Planner - Search</title>
+  <link rel="stylesheet" href="/style.css">
+</head>
+<body>
+  <main>
+    <section class="search">
+      <h1>Weekly <br> Dinner <br> Planner</h1>
+      <div>
+        <p class="section-header">Select Meal</p>
+        <div class="search-bar">
+          <input type="text" name="search" id="search" placeholder="Chicken...">
+          <i class="search-icon"></i>
+        </div>
+      </div>
+
+      <p class="section-header">Suggestions</p>
+      <ul class="scrollable suggestions">
+        <li class="search-result">
+          <img src="" alt="">
+          <div>
+            <p>Meal Name</p>
+            <p>calories: <span>2000</span></p>
+          </div>
+        </li>
+        <li class="search-result">
+          <img src="" alt="">
+          <div>
+            <p>Meal Name</p>
+            <p>calories: <span>2000</span></p>
+          </div>
+        </li>
+        <li class="search-result">
+          <img src="" alt="">
+          <div>
+            <p>Meal Name</p>
+            <p>calories: <span>2000</span></p>
+          </div>
+        </li>
+        <li class="search-result">
+          <img src="" alt="">
+          <div>
+            <p>Meal Name</p>
+            <p>calories: <span>2000</span></p>
+          </div>
+        </li>
+        <li class="search-result">
+          <img src="" alt="">
+          <div>
+            <p>Meal Name</p>
+            <p>calories: <span>2000</span></p>
+          </div>
+        </li>
+        <li class="search-result">
+          <img src="" alt="">
+          <div>
+            <p>Meal Name</p>
+            <p>calories: <span>2000</span></p>
+          </div>
+        </li>
+        <li class="search-result">
+          <img src="" alt="">
+          <div>
+            <p>Meal Name</p>
+            <p>calories: <span>2000</span></p>
+          </div>
+        </li>
+      </ul>
+      <a href="/details/" class="button">Confirm</a>
+    </section>
+    <section class="results">
+      <h2>Search Results</h2>
+    </section>
+  </main>
+</body>
+<script>
+  document.querySelectorAll(".search-result").forEach(result => {
+    result.addEventListener("click", (e) => {
+      const selected = document.querySelector(".selected") 
+      console.log(result.classList)
+      selected ? selected.classList.remove("selected"): selected;
+      result.classList.add("selected")
+    })
+  })
+</script>
+</html>
