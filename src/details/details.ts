@@ -1,20 +1,24 @@
-import { Meal, Meals, weekday } from "../data";
+import { getEmptyMeal, Meal, Meals, weekday } from "../data";
 
 function fillDetails() {
   const info = document.querySelector(".details-info");
   const data: Meal = getData();
 
+  const img = document.querySelector(".details-img");
+  img?.setAttribute("src", data.main.img);
+  if (data.main.img) img?.setAttribute("alt", "Image of " + data.main.name);
+
   info!.innerHTML = `
     <div class="relative">
       <h2>Main Dish:</h2>
-      <a href="search/?for=meal&day=sunday">edit</a>
+      <a href="search/?for=meal&day=${getParam("day")}">edit</a>
       <ul>
         <li>${data.main.name}</li>
       </ul>
     </div>
     <div class="relative">
       <h2>Side Dishes:</h2>
-      <a href="search/?for=side&day=sunday">edit</a>
+      <a href="search/?for=side&day=${getParam("day")}">edit</a>
       <ul>
         ${data.side.map((side: string) => `<li>${side}</li>`).join("")}
       </ul>
@@ -28,13 +32,12 @@ function getParam(param: string) {
   return params.get(param);
 }
 
-function getIndex() {
-  const day = getParam("day");
-  return weekday.findIndex((d) => d == day);
-}
-
 function getData(): Meal {
-  return Meals[getIndex()];
+  const day = getParam("day")?.toLowerCase() || "";
+  const currentMeal = Meals[day];
+  return currentMeal == undefined
+    ? getEmptyMeal(weekday.indexOf(day))
+    : currentMeal;
 }
 
 function displayDate() {

@@ -1,5 +1,5 @@
 import type { Meal } from "./data";
-import { Meals, weekday } from "./data";
+import { emptyMeal, getEmptyMeal, Meals, weekday } from "./data";
 
 const MealCardTemplate = function (meal: Meal) {
   return `
@@ -22,8 +22,14 @@ const MealCardTemplate = function (meal: Meal) {
 };
 
 function init() {
-  const mealList = document.querySelector(".week-grid");
-  mealList!.innerHTML = Meals.map((meal) => MealCardTemplate(meal)).join("");
+  const mealGrid = document.querySelector(".week-grid");
+  const mealList = Object.entries(Meals);
+  for (let i = 0; i < 7; i++) {
+    if (!mealList[i]) mealList[i] = [weekday[i], getEmptyMeal(i)];
+  }
+  mealGrid!.innerHTML = mealList
+    .map(([_, meal]) => MealCardTemplate(meal))
+    .join("");
   document.querySelectorAll(".week-day > a").forEach((day) =>
     day.addEventListener("click", (e) => {
       e.preventDefault;

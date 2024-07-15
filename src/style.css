@@ -11,6 +11,11 @@
   -moz-osx-font-smoothing: grayscale;
 }
 
+ul {
+  list-style: none;
+  padding-left: 0;
+}
+
 a {
   font-weight: 500;
   color: #646cff;
@@ -103,6 +108,8 @@ section {
 .details img {
   min-width: 100%;
   max-height: 300px;
+  min-height: 200px;
+  background: #444;
   object-fit: cover;
 }
 
@@ -180,10 +187,16 @@ p {
   font-weight: 400;
 }
 
+.search-sidebar {
+  display: grid;
+  grid-template-rows: 1fr 1fr 5fr 50px;
+  align-items: start;
+}
+
 .search {
   display: grid;
-  grid-template-rows: 1fr 1fr 1fr 5fr 50px;
-  align-items: start;
+  grid-template-columns: 3fr 1fr;
+  gap: 1rem;
 }
 
 .search-bar {
@@ -217,7 +230,6 @@ p {
 .search-button {
   display: flex;
   align-items: center;
-  margin-top: 1rem;
 }
 
 .search-button i {
@@ -233,12 +245,31 @@ p {
   float: right;
   font-weight: 900;
 }
-
 .suggestions {
+}
+
+.suggestions-list {
+  max-width: 70vw;
+  overflow-x: auto;
+  list-style: none;
+  display: flex;
   margin: 0;
   padding: 0;
   margin-bottom: 1rem;
   max-height: calc(100% - 1.25rem);
+}
+
+.search-results {
+  max-height: 50vh;
+  overflow-y: auto;
+}
+
+.card {
+  border: 1px solid #aaa;
+  margin: 0.5rem;
+  padding: 0.5rem;
+  min-width: 200px;
+  min-height: 80px;
 }
 
 .search-result {
