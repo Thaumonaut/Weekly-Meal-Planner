@@ -1,11 +1,11 @@
-import { getEmptyMeal, Meal, Meals } from "./data";
-import { MealCardTemplate, weekday } from "./utils";
+import { getEmptyMeal, Meal } from "./data";
+import { MealCardTemplate, weekday, getMeals } from "./utils";
 
 const CreateWeekDayCard = function (meal: Meal) {
   return `
-  <li class="">
-    <h3>${weekday[meal.date.getDay()]}</h3>
-    <span class="">${meal.date.toLocaleDateString()}</span>
+  <li>
+    <h3>${weekday[new Date(meal.date).getDay()]}</h3>
+    <span class="">${new Date(meal.date).toLocaleDateString()}</span>
     ${MealCardTemplate(meal)}
   </li>
   `;
@@ -13,13 +13,13 @@ const CreateWeekDayCard = function (meal: Meal) {
 
 function init() {
   const mealGrid = document.querySelector(".week-grid");
-  const data = Meals || {};
+  const data = getMeals("wmp") || {};
   for (let i = 0; i < 7; i++) {
     const day = weekday[i].toLowerCase();
-    if (!Meals[day]) data[day] = getEmptyMeal(i);
-
-    mealGrid!.innerHTML += CreateWeekDayCard(Meals[day]);
+    if (!data[day]) data[day] = getEmptyMeal(i);
+    mealGrid!.innerHTML += CreateWeekDayCard(data[day]);
   }
+  console.log(data);
   document.querySelectorAll(".week-day > a").forEach((day) =>
     day.addEventListener("click", (e) => {
       e.preventDefault;

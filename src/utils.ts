@@ -1,7 +1,9 @@
 import { Meal } from "./data";
 
-export function GetNewDate(start: Date, offset = 1): Date {
-  const weekStart: Date = new Date(start.toDateString());
+export function GetNewDate(offset = 1): Date {
+  const weekStart: Date = new Date();
+  weekStart.setDate(weekStart.getDate() - weekStart.getDay());
+
   const day = weekStart.setDate(weekStart.getDate() + offset);
   const date = new Date(day);
   return date;
@@ -19,7 +21,7 @@ export const weekday = [
 
 export const MealCardTemplate = function (meal: Meal) {
   return `
-    <a href="details/?day=${weekday[meal.date.getDay()]}" class="week-day card">
+    <a href="details/?day=${weekday[new Date(meal.date).getDay()]}" class="week-day card">
       <img
         src="${meal.main.img}"
         alt="Image of ${meal.main.name}"
@@ -35,7 +37,11 @@ export const MealCardTemplate = function (meal: Meal) {
   `;
 };
 
-export const CardTemplate = function (item: any, action: any, callback: any) {
+export const CardTemplate = function (
+  item: any,
+  callback: any,
+  action = "click",
+) {
   const card = document.createElement("li");
   card.classList.add("card");
   card.innerHTML = `
@@ -48,6 +54,17 @@ export const CardTemplate = function (item: any, action: any, callback: any) {
       <p>${item.calories}</p>
     </div>
   `;
-  card.addEventListener("click", (evt) => callback(evt, card));
+  card.setAttribute("data-id", item.id);
+  card.addEventListener(action, (evt) => callback(evt, card));
   return card;
 };
+
+export function getMeals(id: string) {
+  const jsonString = window.localStorage.getItem(id);
+  return JSON.parse(jsonString);
+}
+
+export function saveMeals(id: string, data: Meal) {
+  const dataString = JSON.stringify(data);
+  window.localStorage.setItem(id, dataString);
+}

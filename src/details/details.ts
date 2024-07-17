@@ -1,5 +1,5 @@
 import { getEmptyMeal, Meal, Meals } from "../data";
-import { weekday } from "../utils";
+import { getMeals, saveMeals, weekday } from "../utils";
 
 function fillDetails() {
   const info = document.querySelector(".details-info");
@@ -35,7 +35,8 @@ function getParam(param: string) {
 
 function getData(): Meal {
   const day = getParam("day")?.toLowerCase() || "";
-  const currentMeal = Meals[day];
+  const data = getMeals("wmp");
+  const currentMeal = data[day];
   return currentMeal == undefined
     ? getEmptyMeal(weekday.indexOf(day))
     : currentMeal;

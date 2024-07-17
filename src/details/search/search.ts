@@ -1,22 +1,37 @@
-import { Recipes } from "../../data";
-import { CardTemplate } from "../../utils";
+import { Meals, Recipes } from "../../data";
+import {
+  CardTemplate,
+  GetNewDate,
+  weekday,
+  saveMeals,
+  getMeals,
+} from "../../utils";
+
+let selectedItem = {};
 
 document.querySelector(".confirm")!.addEventListener("click", (evt) => {
   evt.preventDefault();
 
   const params = new URLSearchParams(window.location.search);
-  const day = params.get("day");
+  const day = params.get("day") || "";
 
-  const element = evt.target;
-  element!.attributes!.href = "/details/?day=" + day;
-  console.log(element!.attributes.href);
+  let data = getMeals("wmp") || {};
+
+  data[day?.toLowerCase()] = {
+    date: GetNewDate(weekday.indexOf(day)),
+    main: {
+      name: selectedItem.name,
+      img: selectedItem.img,
+    },
+    side: [],
+  };
+
+  saveMeals("wmp", data);
 
   window.open("/details/?day=" + day, "_self");
 });
 
-const searchButton = document.querySelector(".search-button");
-
-searchButton!.addEventListener("click", () => {
+document.querySelector(".search-button")!.addEventListener("click", () => {
   CreateFakeData(".search-results");
 });
 
@@ -26,16 +41,14 @@ window.addEventListener("load", () => {
 
 function CreateFakeData(selector: string) {
   const parentObject = document.querySelector(selector);
-  const html = Recipes.map((data) => CardTemplate(data, "click", SelectCard));
+  const html = Recipes.map((data) => CardTemplate(data, SelectCard));
   html.forEach((element) => {
     parentObject?.appendChild(element);
   });
 }
 
-const SelectCard = function (e: any, result: any) {
-  console.log(e, result);
+const SelectCard = function (e, result: any) {
   const selected = document.querySelector(".selected");
-  console.log();
   if (e.target.classList.contains("selected")) {
     e.target.classList.remove("selected");
     document.querySelector(".selection")!.innerHTML = "Nothing Selected";
@@ -44,4 +57,9 @@ const SelectCard = function (e: any, result: any) {
   selected ? selected.classList.remove("selected") : selected;
   result.classList.add("selected");
   document.querySelector(".selection")!.innerHTML = result.innerHTML;
+
+  const id: number = result!.getAttribute("data-id") || 0;
+  selectedItem = Recipes[id];
+
+  console.log(selectedItem, id);
 };
