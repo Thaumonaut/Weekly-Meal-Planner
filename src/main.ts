@@ -1,24 +1,12 @@
-import type { Meal } from "./data";
-import { getEmptyMeal, Meals, weekday } from "./data";
+import { getEmptyMeal, Meal, Meals } from "./data";
+import { MealCardTemplate, weekday } from "./utils";
 
-const MealCardTemplate = function (meal: Meal) {
+const CreateWeekDayCard = function (meal: Meal) {
   return `
-  <li>
+  <li class="">
     <h3>${weekday[meal.date.getDay()]}</h3>
     <span class="">${meal.date.toLocaleDateString()}</span>
-    <a  href="details/?day=${weekday[meal.date.getDay()]}" class="week-day">
-      <img
-        src="${meal.main.img}"
-        alt="Image of ${meal.main.name}"
-      />
-      <div>
-        <h3><span>Main: </span>${meal.main.name}</h3>
-        <p>Sides:</p>
-        <ul>
-          ${meal.side.map((side: string) => `<li>${side}</li>`).join("")}
-        </ul>
-      </div>
-    </a>
+    ${MealCardTemplate(meal)}
   </li>
   `;
 };
@@ -30,7 +18,7 @@ function init() {
     const day = weekday[i].toLowerCase();
     if (!Meals[day]) data[day] = getEmptyMeal(i);
 
-    mealGrid!.innerHTML += MealCardTemplate(Meals[day]);
+    mealGrid!.innerHTML += CreateWeekDayCard(Meals[day]);
   }
   document.querySelectorAll(".week-day > a").forEach((day) =>
     day.addEventListener("click", (e) => {

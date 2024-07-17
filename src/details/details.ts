@@ -1,4 +1,5 @@
-import { getEmptyMeal, Meal, Meals, weekday } from "../data";
+import { getEmptyMeal, Meal, Meals } from "../data";
+import { weekday } from "../utils";
 
 function fillDetails() {
   const info = document.querySelector(".details-info");
