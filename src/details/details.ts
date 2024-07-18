@@ -35,7 +35,7 @@ function getParam(param: string) {
 
 function getData(): Meal {
   const day = getParam("day")?.toLowerCase() || "";
-  const data = getMeals("wmp");
+  const data = getMeals("wmp") || {};
   const currentMeal = data[day];
   return currentMeal == undefined
     ? getEmptyMeal(weekday.indexOf(day))

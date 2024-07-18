@@ -21,7 +21,7 @@ export const weekday = [
 
 export const MealCardTemplate = function (meal: Meal) {
   return `
-    <a href="details/?day=${weekday[new Date(meal.date).getDay()]}" class="week-day card">
+    <a href="details/?day=${weekday[new Date(meal.date).getDay()]}" class="week-day">
       <img
         src="${meal.main.img}"
         alt="Image of ${meal.main.name}"
