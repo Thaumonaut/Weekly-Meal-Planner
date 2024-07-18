@@ -59,7 +59,8 @@ const SelectCard = function (e, result: any) {
   document.querySelector(".selection")!.innerHTML = result.innerHTML;
 
   const id: number = result!.getAttribute("data-id") || 0;
-  selectedItem = Recipes[id];
+  const index = Recipes.findIndex(item => item.id == id)
+  selectedItem = Recipes[index];
 
-  console.log(selectedItem, id);
+  console.log(selectedItem, index);
 };
