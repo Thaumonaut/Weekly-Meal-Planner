@@ -1,4 +1,4 @@
-import { Meals, Recipes } from "../../data";
+import { Recipes } from "../../data";
 import {
   CardTemplate,
   GetNewDate,
