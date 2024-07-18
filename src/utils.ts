@@ -9,6 +9,10 @@ export function GetNewDate(offset = 1): Date {
   return date;
 }
 
+export function StringToDate(dateString: string | Date) {
+  return new Date(dateString);
+}
+
 export const weekday = [
   "Sunday",
   "Monday",
@@ -46,12 +50,13 @@ export const CardTemplate = function (
   card.classList.add("card");
   card.innerHTML = `
     <img
-      src="${item.img}"
-      alt="Image of ${item.name}"
+      src="${item.img || item.image}"
+      alt="Image of ${item.name || item.title}"
     />
     <div>
-      <h3><span>Name: </span>${item.name}</h3>
-      <p>${item.calories}</p>
+      <h3>${item.name || item.title}</h3>
+
+      <a href="${item.spoonacularSourceUrl}">Recipe</a>
     </div>
   `;
   card.setAttribute("data-id", item.id);
@@ -59,8 +64,28 @@ export const CardTemplate = function (
   return card;
 };
 
+export async function RecipeSearch(query: string) {
+  const res = await fetch(
+    `https://api.spoonacular.com/recipes/complexSearch?apiKey=${import.meta.env.VITE_API_KEY}&query=${query}&addRecipeInformation=true`,
+  );
+
+  const json = await res.json();
+  return json;
+}
+
+export async function RandomRecipes(quantity: number) {
+  const res = await fetch(
+    `https://api.spoonacular.com/recipes/random?apiKey=${import.meta.env.VITE_API_KEY}&number=${quantity}&include-tags=dinner`,
+  );
+
+  const json = await res.json();
+  console.log(res, json);
+  return json;
+}
+
 export function getMeals(id: string) {
   const jsonString = window.localStorage.getItem(id);
+  // @ts-ignore
   return JSON.parse(jsonString);
 }
 

@@ -1,5 +1,5 @@
 import { getEmptyMeal, Meal } from "../data";
-import { getMeals, weekday } from "../utils";
+import { getMeals, StringToDate, weekday } from "../utils";
 
 function fillDetails() {
   const info = document.querySelector(".details-info");
@@ -47,7 +47,7 @@ function displayDate() {
   const date = document.querySelector(".section-subheader");
 
   day!.textContent = getParam("day");
-  date!.textContent = getData().date.toLocaleDateString();
+  date!.textContent = StringToDate(getData().date).toLocaleDateString();
 }
 
 function init() {
