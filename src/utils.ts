@@ -55,7 +55,6 @@ export const CardTemplate = function (
     />
     <div>
       <h3>${item.name || item.title}</h3>
-
       <a href="${item.spoonacularSourceUrl}">Recipe</a>
     </div>
   `;
@@ -66,7 +65,7 @@ export const CardTemplate = function (
 
 export async function RecipeSearch(query: string) {
   const res = await fetch(
-    `https://api.spoonacular.com/recipes/complexSearch?apiKey=${import.meta.env.VITE_API_KEY}&query=${query}&addRecipeInformation=true`,
+    `https://api.spoonacular.com/recipes/complexSearch?apiKey=${import.meta.env.VITE_API_KEY}&query=${query}&addRecipeInformation=true&include-tags=dinner`,
   );
 
   const json = await res.json();

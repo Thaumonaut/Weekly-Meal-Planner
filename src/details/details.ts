@@ -12,14 +12,14 @@ function fillDetails() {
   info!.innerHTML = `
     <div class="relative">
       <h2>Main Dish:</h2>
-      <a href="search/?for=meal&day=${getParam("day")}">edit</a>
-      <ul>
-        <li>${data.main.name}</li>
-      </ul>
+      ${data.main.name 
+        ? `<a href="search/?day=${getParam("day")}">Change Meal</a><ul><li>${data.main.name}</li></ul>` 
+        : `<a href="search/?day=${getParam("day")}">Add Meal</a>`
+      }
     </div>
     <div class="relative">
       <h2>Side Dishes:</h2>
-      <a href="search/?for=side&day=${getParam("day")}">edit</a>
+      <a href="search/?for=side&day=${getParam("day")}">Add Side</a>
       <ul>
         ${data.side.map((side: string) => `<li>${side}</li>`).join("")}
       </ul>
