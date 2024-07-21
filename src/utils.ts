@@ -26,10 +26,14 @@ export const weekday = [
 export const MealCardTemplate = function (meal: Meal) {
   return `
     <a href="details/?day=${weekday[new Date(meal.date).getDay()]}" class="week-day">
-      <img
-        src="${meal.main.img}"
-        alt="Image of ${meal.main.name}"
-      />
+    ${meal.main.img 
+      ? `<img
+          src="${meal.main.img}"
+          alt="Image of ${meal.main.name}"
+        />`
+        : `<div class="img-placeholder"></div>`
+    }
+      
       <div>
         <h3><span>Main: </span>${meal.main.name}</h3>
         <p>Sides:</p>
