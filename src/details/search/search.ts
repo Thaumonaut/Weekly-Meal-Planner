@@ -1,4 +1,4 @@
-import { getEmptyMeal, Recipes } from "../../data";
+import { Recipes } from "../../data";
 import {
   CardTemplate,
   GetNewDate,
@@ -79,6 +79,7 @@ function CreateItemCards(selector: string, data = Recipes) {
   });
 }
 
+// @ts-ignore
 const SelectCard = function (e: any, result: any) {
   const selected = document.querySelector(".selected");
   if (result.classList.contains("selected")) {
