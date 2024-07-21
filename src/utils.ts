@@ -58,7 +58,7 @@ export const CardTemplate = function (
       alt="Image of ${item.name || item.title}"
     />
     <div>
-      <h3>${item.name || item.title}</h3>
+      <p class="card-title">${item.name || item.title}</p>
       <a href="${item.spoonacularSourceUrl}">Recipe</a>
     </div>
   `;

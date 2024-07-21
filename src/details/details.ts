@@ -3,7 +3,13 @@ import { getMeals, StringToDate, weekday } from "../utils";
 
 function fillDetails() {
   const info = document.querySelector(".details-info");
+  const button = document.querySelector(".confirm");
   const data: Meal = getData();
+
+  button?.addEventListener("click", (e) => {
+    e.preventDefault;
+    window.open("/", "_self")
+  })
 
   const img = document.querySelector(".details-img");
   img?.setAttribute("src", data.main.img);

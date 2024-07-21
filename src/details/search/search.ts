@@ -1,4 +1,4 @@
-import { Recipes } from "../../data";
+import { getEmptyMeal, Recipes } from "../../data";
 import {
   CardTemplate,
   GetNewDate,
@@ -81,9 +81,10 @@ function CreateItemCards(selector: string, data = Recipes) {
 
 const SelectCard = function (e: any, result: any) {
   const selected = document.querySelector(".selected");
-  if (e.target.classList.contains("selected")) {
-    e.target.classList.remove("selected");
+  if (result.classList.contains("selected")) {
+    result.classList.remove("selected");
     document.querySelector(".selection")!.innerHTML = "Nothing Selected";
+    selectedItem = {}
     return;
   }
   selected ? selected.classList.remove("selected") : selected;
