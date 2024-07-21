@@ -80,7 +80,6 @@ button:focus-visible,
 
 main {
   min-height: 100%;
-  overflow-y: hidden;
 }
 
 aside {
@@ -90,6 +89,10 @@ aside {
   gap: 1rem;
   grid-template-columns: auto 1fr;
   align-items: start;
+  position: sticky;
+  top: 1rem;
+  background: white;
+  padding-block: 1rem;
 }
 
 section {
