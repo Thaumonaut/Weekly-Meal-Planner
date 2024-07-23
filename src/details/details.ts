@@ -1,42 +1,60 @@
 import { getEmptyMeal, Meal } from "../data";
-import { getMeals, StringToDate, weekday } from "../utils";
+import { GetMealDetails, getMeals, StringToDate, weekday } from "../utils";
 
-function fillDetails() {
+async function fillDetails() {
   const info = document.querySelector(".details-info");
   const button = document.querySelector(".confirm");
   const data: Meal = getData();
 
   button?.addEventListener("click", (e) => {
     e.preventDefault;
-    window.open("/", "_self")
-  })
+    window.open("/", "_self");
+  });
 
   const img = document.querySelector(".details-img");
   img?.setAttribute("src", data.main.img);
   if (data.main.img) img?.setAttribute("alt", "Image of " + data.main.name);
 
   info!.innerHTML = `
-    <div class="relative">
-      <h2>Main Dish:</h2>
-      ${data.main.name 
-        ? `<a href="search/?day=${getParam("day")}">Change Meal</a><ul><li>${data.main.name}</li></ul>` 
-        : `<a href="search/?day=${getParam("day")}">Add Meal</a>`
-      }
-    </div>
-    <div class="relative">
-      <h2>Side Dishes:</h2>
-      <a href="search/?for=side&day=${getParam("day")}">Add Side</a>
-      <ul>
-        ${data.side.map((side: string) => `<li>${side}</li>`).join("")}
-      </ul>
-    </div>
-    `;
+      <h2>Meal:</h2>
+      ${
+        data.main.name
+          ? `<a href="search/?day=${getParam("day")}">Change Meal</a><ul><li>${data.main.name}</li></ul>`
+          : ` <a href = "search/?day=${getParam("day")}" > Add Meal </a>`
+      }`;
+
+  if (data.main.name) {
+    info!.innerHTML += await CreateDetailsSection(data);
+  }
 }
 
 function getParam(param: string) {
   const searchString = window.location.search;
   const params = new URLSearchParams(searchString);
   return params.get(param);
+}
+
+async function CreateDetailsSection(data: any) {
+  try {
+    const details = await GetMealDetails(data.main.id);
+    return `<h2>Details</h2>
+      <a href="${details.sourceUrl}"> Source </a>
+      <h3>Description</h3>
+      <p>${details.summary}</p>
+      <h3>Ingredients</h3>
+      <ul style="list-style: disc; padding-left: 1.5rem;">
+      ${
+        details.extendedIngredients
+          ? details.extendedIngredients
+              .map((item: any) => {
+                return `<li><p>${item.original}</p></li>`;
+              })
+              .join("")
+          : ""
+      }`;
+  } catch (e) {
+    return `<p>${e}</p>`;
+  }
 }
 
 function getData(): Meal {

@@ -1,4 +1,3 @@
-import { Recipes } from "../../data";
 import {
   CardTemplate,
   GetNewDate,
@@ -43,6 +42,8 @@ function SaveMeal(evt: any) {
     date: GetNewDate(weekday.indexOf(day)),
     main: {
       // @ts-ignore
+      id: selectedItem.id,
+      // @ts-ignore
       name: selectedItem.title,
       // @ts-ignore
       img: selectedItem.image,
@@ -70,11 +71,11 @@ window.addEventListener("load", async () => {
   CreateItemCards(".suggestions-list", random);
 });
 
-function CreateItemCards(selector: string, data = Recipes) {
+function CreateItemCards(selector: string, data: any) {
   const parentObject = document.querySelector(selector);
-  const html = data.map((data) => CardTemplate(data, SelectCard));
+  const html = data.map((data: any) => CardTemplate(data, SelectCard));
   parentObject!.innerHTML = "";
-  html.forEach((element) => {
+  html.forEach((element: any) => {
     parentObject?.appendChild(element);
   });
 }
@@ -85,7 +86,7 @@ const SelectCard = function (e: any, result: any) {
   if (result.classList.contains("selected")) {
     result.classList.remove("selected");
     document.querySelector(".selection")!.innerHTML = "Nothing Selected";
-    selectedItem = {}
+    selectedItem = {};
     return;
   }
   selected ? selected.classList.remove("selected") : selected;

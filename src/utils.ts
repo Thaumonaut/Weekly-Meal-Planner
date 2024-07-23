@@ -25,24 +25,22 @@ export const weekday = [
 
 export const MealCardTemplate = function (meal: Meal) {
   return `
-    <a href="details/?day=${weekday[new Date(meal.date).getDay()]}" class="week-day">
-    ${meal.main.img 
-      ? `<img
+    <a href="/details/?day=${weekday[new Date(meal.date).getDay()]}" class="week-day">
+    ${
+      meal.main.img
+        ? `<img
           src="${meal.main.img}"
           alt="Image of ${meal.main.name}"
         />`
         : `<div class="img-placeholder"></div>`
     }
-      
+
       <div>
-        <h3><span>Main: </span>${meal.main.name}</h3>
-        <p>Sides:</p>
-        <ul>
-          ${meal.side.map((side: string) => `<li>${side}</li>`).join("")}
-        </ul>
-      </div>
+      ${meal.main.id != 0 ? `<p>${StringToDate(meal.date).toDateString()}</p>` : "Select Meal..."}
+  <h3> ${meal.main.name}</h3>
+    </div>
     </a>
-  `;
+      `;
 };
 
 export const CardTemplate = function (
@@ -54,18 +52,31 @@ export const CardTemplate = function (
   card.classList.add("card");
   card.innerHTML = `
     <img
-      src="${item.img || item.image}"
-      alt="Image of ${item.name || item.title}"
+      src = "${item.img || item.image}"
+      alt = "Image of ${item.name || item.title}"
     />
-    <div>
-      <p class="card-title">${item.name || item.title}</p>
-      <a href="${item.spoonacularSourceUrl}">Recipe</a>
-    </div>
-  `;
+  <div>
+  <p class="card-title" > ${item.name || item.title} </p>
+    <a href = "${item.spoonacularSourceUrl}" > Recipe </a>
+      </div>
+        `;
   card.setAttribute("data-id", item.id);
   card.addEventListener(action, (evt) => callback(evt, card));
   return card;
 };
+
+export async function GetMealDetails(id: number) {
+  const res = await fetch(
+    `https://api.spoonacular.com/recipes/${id}/information?apiKey=${import.meta.env.VITE_API_KEY}&includeNutrition=true`,
+  );
+
+  try {
+    const json = await res.json();
+    return json;
+  } catch (e) {
+    throw new Error("Not able to get data from API");
+  }
+}
 
 export async function RecipeSearch(query: string) {
   const res = await fetch(
