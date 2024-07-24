@@ -9,6 +9,11 @@ export function GetNewDate(offset = 1): Date {
   return date;
 }
 
+export function GetParam(param: string) {
+  const params = new URLSearchParams(window.location.search);
+  return params.get(param) || "";
+}
+
 export function StringToDate(dateString: string | Date) {
   return new Date(dateString);
 }

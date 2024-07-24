@@ -1,3 +1,4 @@
+import { getEmptyMeal } from "../../data";
 import {
   CardTemplate,
   GetNewDate,
@@ -6,9 +7,10 @@ import {
   getMeals,
   RecipeSearch,
   RandomRecipes,
+  GetParam,
 } from "../../utils";
 
-let selectedItem = {};
+let selectedItem = getEmptyMeal(weekday.indexOf(GetParam("day")));
 let results: any = [];
 const searchInput = document.querySelector("#search");
 
@@ -33,23 +35,24 @@ async function Search() {
 function SaveMeal(evt: any) {
   evt.preventDefault();
 
-  const params = new URLSearchParams(window.location.search);
-  const day = params.get("day") || "";
-
+  const day = GetParam("day")
+  
   let data = getMeals("wmp") || {};
+  
+  // console.log(selectedItem.id)
 
   data[day?.toLowerCase()] = {
     date: GetNewDate(weekday.indexOf(day)),
     main: {
       // @ts-ignore
-      id: selectedItem.id,
+      id: selectedItem.id || selectedItem.main.id,
       // @ts-ignore
-      name: selectedItem.title,
+      name: selectedItem.title || selectedItem.main.name,
       // @ts-ignore
-      img: selectedItem.image,
+      img: selectedItem.image || selectedItem.main.img,
     },
-    side: [],
   };
+  console.log(data)
 
   saveMeals("wmp", data);
 
@@ -86,7 +89,9 @@ const SelectCard = function (e: any, result: any) {
   if (result.classList.contains("selected")) {
     result.classList.remove("selected");
     document.querySelector(".selection")!.innerHTML = "Nothing Selected";
-    selectedItem = {};
+    const index: number = weekday.indexOf(GetParam('day'))
+    selectedItem = getEmptyMeal(index);
+    console.log(selectedItem)
     return;
   }
   selected ? selected.classList.remove("selected") : selected;
@@ -96,6 +101,4 @@ const SelectCard = function (e: any, result: any) {
   const id: number = result!.getAttribute("data-id") || 0;
   const index = results!.findIndex((item: any) => item.id == id);
   selectedItem = results![index];
-
-  console.log(selectedItem, index);
 };

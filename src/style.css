@@ -278,11 +278,6 @@ p {
   max-height: calc(100% - 1.25rem);
 }
 
-.main-section {
-  /* max-height: calc(100dvh - 100px); */
-  /* overflow-y: auto; */
-}
-
 .card {
   border: 1px solid #aaa;
   margin-block: 0.5rem;
