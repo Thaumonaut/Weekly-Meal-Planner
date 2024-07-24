@@ -6,7 +6,7 @@ async function fillDetails() {
   const button = document.querySelector(".confirm");
   const data: Meal = getData();
 
-  button?.addEventListener("click", (e) => {
+  button?.addEventListener("click", (e: any) => {
     e.preventDefault;
     window.open("/", "_self");
   });
@@ -52,7 +52,7 @@ async function CreateDetailsSection(data: any) {
               .join("")
           : ""
       }`;
-  } catch (e) {
+  } catch (e: any) {
     return `<p>${e}</p>`;
   }
 }

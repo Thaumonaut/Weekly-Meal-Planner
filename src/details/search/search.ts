@@ -14,7 +14,7 @@ let selectedItem = getEmptyMeal(weekday.indexOf(GetParam("day")));
 let results: any = [];
 const searchInput = document.querySelector("#search");
 
-searchInput?.addEventListener("keydown", (e) => {
+searchInput?.addEventListener("keydown", (e: any) => {
   // @ts-ignore
   if (e.key == "Enter") {
     Search();

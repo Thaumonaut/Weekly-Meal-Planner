@@ -15,7 +15,7 @@ function init() {
   const mealGrid = document.querySelector(".week-grid");
   const clearButton = document.querySelector(".clear");
 
-  clearButton?.addEventListener("click", (e)=>{
+  clearButton?.addEventListener("click", ()=>{
     mealGrid!.innerHTML = "";
     for (let i = 0; i < 7; i++) {
       const day = weekday[i].toLowerCase();
@@ -33,7 +33,7 @@ function init() {
   }
   console.log(data);
   document.querySelectorAll(".week-day > a").forEach((day) =>
-    day.addEventListener("click", (e) => {
+    day.addEventListener("click", (e: any) => {
       e.preventDefault;
       console.log("click");
     }),

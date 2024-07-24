@@ -78,7 +78,7 @@ export async function GetMealDetails(id: number) {
   try {
     const json = await res.json();
     return json;
-  } catch (e) {
+  } catch (e: any) {
     throw new Error("Not able to get data from API");
   }
 }
